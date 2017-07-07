@@ -1,0 +1,30 @@
+{
+  "name": "dmd-audio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denvereezy/DMD-AUDIO.git"
+  },
+  "author": "denver daniels",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denvereezy/DMD-AUDIO/issues"
+  },
+  "homepage": "https://github.com/denvereezy/DMD-AUDIO#readme",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "compression": "^1.6.2",
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "multer": "^1.3.0",
+    "mysql": "^2.13.0"
+  }
+}
