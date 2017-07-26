@@ -9,3 +9,7 @@ exports.playback = function(req, res, next) {
 exports.home = function(req, res, next) {
     res.render('playback');
 };
+
+exports.queue = function(req, res, next) {
+    res.render('queue');
+};
