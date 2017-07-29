@@ -8,7 +8,7 @@ const express          = require('express'),
 	  router		   = express.Router(),
 	  connection       = require('./routes/index'),
 	  music            = require('./routes/music'),
-	  MusicDataService = require('./data-services/musicDataService')
+	  MusicDataService = require('./data-services/musicDataService'),
       routing 		   = require('./routes/routing');
 
 
@@ -35,11 +35,12 @@ app.engine('handlebars', exhbs({defaultLayout : 'main'}));
 app.set('view engine', 'handlebars');
 
 app.get('/', routing.home);
-app.get('/playback', routing.playback);
-app.get('/library', routing.library);
 
+router.get('/edit/:id', music.edit);
+router.post('/update/:id', music.update);
 router.get('/music', music.songs);
 router.post('/music', multer({ dest: './public/uploads/'}).single('audio'), music.add);
+
 app.use('/api', router);
 
 const port = process.env.PORT || 8080;
