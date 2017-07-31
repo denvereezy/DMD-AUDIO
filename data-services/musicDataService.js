@@ -10,4 +10,12 @@ module.exports = function(connection) {
     this.show = function() {
         return queryDataService.executeQuery('select * from music');
     };
+
+    this.edit = function (id) {
+        return queryDataService.executeQuery(`select * from music where id = ${id}`);
+    };
+
+    this.update = function (id, name) {
+        return queryDataService.executeQuery('update music set name = ? where id = ?', [name, id]);
+    };
 };
