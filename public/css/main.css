@@ -3,6 +3,10 @@
 	color: #0095D8;
 	font-size: 1.3em;
 }
+.info{
+	color: #0095D8;
+	
+}
 
 .library::-webkit-scrollbar {
         width: 0 !important;
