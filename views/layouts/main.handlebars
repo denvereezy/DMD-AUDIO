@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="msapplication-tap-highlight" content="no" />
-    <link rel="stylesheet" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome-4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="/css/main.css">
 </head>
 
@@ -20,12 +20,96 @@
             <button id="next" class="btn btn-default btn-cmd" title="Next" data-cmd="next"><i class="fa fa-step-forward"></i></button>
         </div>
     </div>
-    {{{body}}}
+    <!-- {{{body}}} -->
+
+
+    <section id="library-section">
+    </br>
+</br>
+        <div class="centre">
+            <h3>Add Music</h3>
+            <form class="form" action="/api/music" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input id="file" type="file" class="form-control" name="audio" accept="audio/*" required>
+                </div>
+                <button type="submit" id="submit" class="btn btn-default form-control">Add</button>
+            </form>
+            <br>
+
+            <div class="library"></div>
+        </div>
+    </section>
+    <section id="playback-section">
+        <div class="knobs row"><br><br>
+            <div id="time-knob" class="col-sm-4">
+                <input id="time" class="duration_dial" value="0" data-width="230" data-height="230" data-bgColor="#34495E" data-fgcolor="#0095D8" data-thickness="0.30" data-min="0" data-max="1000" data-displayInput="true" data-displayPrevious="true">
+                </br>
+                <div class="btn-group">
+                    <button id="repeat" class="btn btn-default btn-lg btn-cmd btn-toggle" type="button" title="Repeat" data-cmd="repeat"><i class="fa fa-repeat"></i></button>
+                    <button id="random" class="btn btn-default btn-lg btn-cmd btn-toggle" type="button" title="Random" data-cmd="random"><i class="fa fa-random"></i></button>
+                    <button id="single" class="btn btn-default btn-lg btn-cmd btn-toggle" type="button" title="Single" data-cmd="single"><i class="fa fa-refresh"></i></button>
+                </div>
+            </div>
+            <div id="playing" class="col-sm-4">
+                <marquee>
+                    <div id="nowPlay">
+                        <span class="left" id="npAction"></span>
+                        <span class="right" id="npTitle"></span>
+                    </div>
+                </marquee>
+
+                </br>
+                <div id="audiowrap">
+                    <div id="audio0">
+                        <audio preload id="audio1" hidden></audio>
+                    </div>
+                </div>
+                <!-- <div id="plwrap">
+                            <ul id="plList"></ul>
+                        </div> -->
+                <!-- </div> -->
+                <!-- </div> -->
+                <div class="eq">
+                    <div class="controls">
+                        <label>Low Gain</label>
+                        <input type="range" value="100" step="1" min="0" max="100" oninput="changeGain(this.value, 'lowGain');"></input>
+                    </div>
+                    <div class="controls">
+                        <label>Mid Gain</label>
+                        <input type="range" value="100" step="1" min="0" max="100" oninput="changeGain(this.value, 'midGain');"></input>
+                    </div>
+                    <div class="controls">
+                        <label>High Gain</label>
+                        <input type="range" value="100" step="1" min="0" max="100" oninput="changeGain(this.value, 'highGain');"></input>
+                    </div>
+                </div>
+                <canvas id='canvas' width="300" height="300"></canvas>
+            </div>
+            <div id="volume-knob" class="col-sm-4">
+                <input id="volume" class="vol_dial" value="100" data-width="230" data-height="230" data-bgColor="#0095D8" data-thickness="0.25" data-skin="tron" data-cursor="true" data-angleArc="250" data-angleOffset="-125">
+                </br>
+                <div class="btn-group">
+                    <button id="volume_down" class="btn btn-default btn-lg btn-cmd btn-volume" type="button"><i class="fa fa-volume-down"></i></button>
+                    <button id="volume_off" class="btn btn-default btn-lg btn-cmd btn-volume" type="button"><i class="fa fa-volume-off"></i></button>
+                    <button id="volume_up" class="btn btn-default btn-lg btn-cmd btn-volume" type="button"><i class="fa fa-volume-up"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="queue-section">
+
+        <div class="centre">
+            <br>
+                <br>
+            <div class="queue-library"></div>
+            <div class="info" id="info"></div>
+        </div>
+    </section>
     <div id="menu-bottom">
         <ul>
-            <li id="library"><a href="/library"><i class="fa fa-music"></i> Library</a></li>
-            <li id="playback"><a href="/playback"><i class="fa fa-play"></i> Playback</a></li>
-            <li id="queue"><a href="/queue">><i class="fa fa-list"></i> Queue</a></li>
+            <li id="library"><a href="#"><i class="fa fa-music"></i> Library</a></li>
+            <li id="playback"><a href="#"><i class="fa fa-play"></i> Playback</a></li>
+            <li id="queue"><a href="#">><i class="fa fa-list"></i> Queue</a></li>
         </ul>
     </div>
     <script src="/js/jquery-3.1.0.js"></script>
