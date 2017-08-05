@@ -9,16 +9,14 @@ exports.add = function(req, res, next) {
 
             const data = {
                 song: path,
-                name: req.file.originalname
+                name: req.file.originalname.replace('.mp3', '')
             };
             const music = yield musicDataService.add(data);
-
-            res.redirect('/library');
-
+            res.sendStatus(200);
         } catch (err) {
             next(err);
-            res.redirect('/library');
-        };
+            console.log(err);
+        }
     });
 };
 
@@ -28,10 +26,41 @@ exports.songs = function(req, res, next) {
             const services = yield req.getServices();
             const musicDataService = services.musicDataService;
             const music = yield musicDataService.show();
-            res.json(music);
+            res.send(music);
         } catch (err) {
             next(err);
-            res.redirect('/playback');
-        };
+            console.log(err);
+        }
+    });
+};
+
+exports.edit = function(req, res, next) {
+    co(function * () {
+        try {
+            const services = yield req.getServices();
+            const musicDataService = services.musicDataService;
+            var id = req.params.id;
+            const music = yield musicDataService.edit(id);
+            res.send(music[0]);
+        } catch (err) {
+            next(err);
+            console.log(err);
+        }
+    });
+};
+
+exports.update = function(req, res, next) {
+    co(function * () {
+        try {
+            const services = yield req.getServices();
+            const musicDataService = services.musicDataService;
+            var name = req.body.name,
+                id = req.params.id;
+            const music = yield musicDataService.update(id, name);
+            res.sendStatus(200);
+        } catch (err) {
+            next(err);
+            console.log(err);
+        }
     });
 };
