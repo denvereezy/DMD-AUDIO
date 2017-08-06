@@ -19,9 +19,9 @@ function MySQLConnection(parameters, cb) {
     this.releaseConnection = function() {
         if (poolConnection) {
             poolConnection.destroy();
-        };
+        }
     };
-};
+}
 
 module.exports = function(dbParams, servicesSetup) {
 
@@ -51,7 +51,7 @@ module.exports = function(dbParams, servicesSetup) {
         };
 
         next();
-    }
+    };
 
     return setupProvider;
 };
