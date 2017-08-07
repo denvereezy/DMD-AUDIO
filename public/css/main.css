@@ -1,11 +1,14 @@
-.library{
+.library, .queue-library{
 	overflow: scroll;
+	height: 500px;
+	width: auto;
 	color: #0095D8;
 	font-size: 1.3em;
+	word-wrap:break-word;
 }
 .info{
 	color: #0095D8;
-	
+
 }
 
 .library::-webkit-scrollbar {
@@ -13,7 +16,7 @@
 }
 
 div.centre {
-	width: 200px;
+	width: 500px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
