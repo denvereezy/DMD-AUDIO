@@ -40,6 +40,7 @@ router.get('/edit/:id', music.edit);
 router.post('/update/:id', music.update);
 router.get('/music', music.songs);
 router.post('/music', multer({ dest: './public/uploads/'}).single('audio'), music.add);
+router.post('/delete/:id', music.delete);
 
 app.use('/api', router);
 
