@@ -18,4 +18,8 @@ module.exports = function(connection) {
     this.update = function (id, name) {
         return queryDataService.executeQuery('update music set name = ? where id = ?', [name, id]);
     };
+
+    this.delete = function(id) {
+        return queryDataService.executeQuery(`delete from music where id = ${id}`);
+    };
 };
