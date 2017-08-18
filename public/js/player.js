@@ -1,6 +1,7 @@
 var b = document.documentElement;
 b.setAttribute('data-useragent', navigator.userAgent);
 b.setAttribute('data-platform', navigator.platform);
+var toastr = require('./toastr.min');
 
 jQuery(function($) {
 
@@ -22,10 +23,9 @@ jQuery(function($) {
                     audio.volume = '0.' + Math.floor(value);
                 }
             });
+
             var index = 0,
                 playing = false,
-                mediaPath = '/',
-                extension = '',
                 tracks = data,
                 buildPlaylist = $.each(tracks, function(key, value) {
                     var trackNumber = value.id,
@@ -36,7 +36,10 @@ jQuery(function($) {
                     } else {
                         trackNumber = '' + trackNumber;
                     }
-                    $('#plList').append('<li><div class="plItem"><div class="plNum">' + trackNumber + '.</div><div class="plTitle">' + trackName + '</div>');
+                    $('.library').append('<p class="song">' + trackName + '</p>');
+                    $('.queue-library').append('<a class="edit" href="#" onclick="edit(' + trackNumber + ')">' +
+                        '<p class="song">' + trackName + '</p></a>'
+                    );
                 }),
                 trackCount = tracks.length,
                 npAction = $('#npAction'),
@@ -136,6 +139,8 @@ jQuery(function($) {
                 }),
                 random = $('#random').click(function() {
                     var song = tracks[Math.floor(Math.random() * tracks.length)];
+                    playing = true;
+                    npTitle.text(song.name);
                     audio.src = song.song;
                     audio.play();
                 }),
@@ -173,26 +178,88 @@ jQuery(function($) {
                     $('.duration_dial').val(currentTime).trigger('change');
                     time = min + ":" + sec;
                 }, false);
-            extension = audio.canPlayType('audio/mpeg')
-                ? '.mp3'
-                : audio.canPlayType('audio/ogg')
+                extension = audio.canPlayType('audio/mpeg')
+                    ? '.mp3'
+                    : audio.canPlayType('audio/ogg')
                     ? '.ogg'
                     : '';
-            loadTrack(index);
+                    loadTrack(index);
+
+                    // $('.info').addClass('hidden');
+                edit = function(id) {
+                    $('.queue-library').addClass('hidden');
+                    $('#info').removeClass('hiddden');
+                    $.get('/api/edit/' + id, function(data) {
+                        $('#info').html('<form id="updateForm" class="col-md-8" method="post">' +
+                            '<div class="form-group">' + '<lable>name</lable>' +
+                            '<input class="form-control" type="text" name="name" value="' + data.name +
+                            '"></input>' + '<div>' + '<button type=submit class="form-control btn btn-primary">update</button>' +
+                            '</form><br><button id="delete" class="form-control btn btn-secondary">delete</button>'
+                        );
+                        $('#updateForm').submit(function(e) {
+                            e.preventDefault();
+                            var updatedName = {
+                                name: $('input[name=name]').val()
+                            };
+                            $.post('/api/update/' + data.id, updatedName, function(resp) {
+                                $('#info').addClass('hidden');
+                                $('.queue-library').removeClass('hidden');
+                            });
+                        });
+                        $('#delete').click(function(){
+                            $.post('/api/delete/' + data.id, function(resp) {
+                                $('#info').addClass('hidden');
+                                $('.queue-library').removeClass('hidden');
+                            });
+                        });
+                    });
+                }
+            });
+        }
+
+        $('#submit').attr('disabled', true);
+
+        $('#file').change(function() {
+            $('#submit').removeAttr('disabled');
         });
-    }
 
-    $.get('/api/music', function(data) {
-        $.each(data, function(key, data){
-            $('.library').append(
-                '<p class="song">' + data.name + '</p>'
-            );
+        $('#library-section, #queue-section').addClass('hidden');
+
+        $('#library').click(function(e) {
+            e.preventDefault();
+            $('#playback-section, #queue-section').addClass('hidden');
+            $('#library-section').removeClass('hidden');
+
+            $('#addForm').submit(function(e) {
+                e.preventDefault();
+                toastr.info('Song added!', 'Success');
+
+                var form = new FormData($("#addForm")[0]);
+
+                $.ajax({
+                    url: '/api/music',
+                    method: "POST",
+                    dataType: 'json',
+                    data: form,
+                    processData: false,
+                    contentType: false,
+                    success: function(result){
+                        console.log(result);
+                    },
+                    error: function(er){}
+                });
+            });
         });
-    });
 
-    $('#submit').attr('disabled', true);
+        $('#playback').click(function(e) {
+            e.preventDefault();
+            $('#library-section, #queue-section').addClass('hidden');
+            $('#playback-section').removeClass('hidden');
+        });
 
-    $('#file').change(function(){
-        $('#submit').removeAttr('disabled');
-    });
+        $('#queue').click(function(e) {
+            e.preventDefault();
+            $('#playback-section, #library-section').addClass('hidden');
+            $('#queue-section').removeClass('hidden');
+        });
 });
