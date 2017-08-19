@@ -1,7 +1,7 @@
 var b = document.documentElement;
 b.setAttribute('data-useragent', navigator.userAgent);
 b.setAttribute('data-platform', navigator.platform);
-var toastr = require('./toastr.min');
+var toastr = require('./toastr')
 
 jQuery(function($) {
 
@@ -210,6 +210,7 @@ jQuery(function($) {
                             $.post('/api/delete/' + data.id, function(resp) {
                                 $('#info').addClass('hidden');
                                 $('.queue-library').removeClass('hidden');
+                                toastr.info('Song deleted!', 'Success');
                             });
                         });
                     });
