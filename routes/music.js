@@ -77,8 +77,8 @@ exports.delete = function(req, res, next) {
             var command = 'rm public/' + itemToDelete.song;
             child_process.exec(command, (error, stdout, stderr) => {
                 if (error) {
-                    console.log(`exec error: ${error}`);
-                    res.status(500).send(`exec error: ${error}`);
+                    // console.log(`exec error: ${error}`);
+                    // res.status(500).send(`exec error: ${error}`);
                     return;
                 }
             });
