@@ -1,7 +1,7 @@
 var b = document.documentElement;
 b.setAttribute('data-useragent', navigator.userAgent);
 b.setAttribute('data-platform', navigator.platform);
-var toastr = require('./toastr')
+var toastr = require('./toastr.min.js');
 
 jQuery(function($) {
 
