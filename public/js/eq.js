@@ -54,7 +54,7 @@ var sum = context.createGain();
 
 // Input
 //
-function changeGain(string, type) {
+ window.changeGain = function(string, type) {
     var value = parseFloat(string) / 100.0;
 
     switch (type) {
