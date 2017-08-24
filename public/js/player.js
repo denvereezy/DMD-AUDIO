@@ -57,9 +57,9 @@ jQuery(function($) {
                         loadTrack(index);
                         audio.play();
                     } else {
-                        audio.pause();
                         index = 0;
                         loadTrack(index);
+                        audio.play();
                     }
                 }).get(0),
                 btnPrev = $('#previous').click(function() {
@@ -83,7 +83,6 @@ jQuery(function($) {
                             audio.play();
                         }
                     } else {
-                        audio.pause();
                         index = 0;
                         loadTrack(index);
                     }
@@ -245,7 +244,6 @@ jQuery(function($) {
                     processData: false,
                     contentType: false,
                     success: function(result){
-                        console.log(result);
                     },
                     error: function(er){}
                 });
