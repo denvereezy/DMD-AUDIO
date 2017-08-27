@@ -184,7 +184,6 @@ jQuery(function($) {
                     : '';
                     loadTrack(index);
 
-                    // $('.info').addClass('hidden');
                 edit = function(id) {
                     $('.queue-library').addClass('hidden');
                     $('#info').removeClass('hiddden');
