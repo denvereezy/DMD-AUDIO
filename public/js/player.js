@@ -37,9 +37,7 @@ jQuery(function($) {
                         trackNumber = '' + trackNumber;
                     }
                     $('.library').append('<p class="song">' + trackName + '</p>');
-                    $('.queue-library').append('<a class="edit" href="#" onclick="edit(' + trackNumber + ')">' +
-                        '<p class="song">' + trackName + '</p></a>'
-                    );
+                    $('.queue-library').append('<a class="edit" href="#" onclick="edit(' + trackNumber + ')">' + '<p class="song">' + trackName + '</p></a>');
                 }),
                 trackCount = tracks.length,
                 npAction = $('#npAction'),
@@ -177,87 +175,92 @@ jQuery(function($) {
                     $('.duration_dial').val(currentTime).trigger('change');
                     time = min + ":" + sec;
                 }, false);
-                extension = audio.canPlayType('audio/mpeg')
-                    ? '.mp3'
-                    : audio.canPlayType('audio/ogg')
+            extension = audio.canPlayType('audio/mpeg')
+                ? '.mp3'
+                : audio.canPlayType('audio/ogg')
                     ? '.ogg'
                     : '';
-                    loadTrack(index);
+            loadTrack(index);
 
-                edit = function(id) {
-                    $('.queue-library').addClass('hidden');
-                    $('#info').removeClass('hiddden');
-                    $.get('/api/edit/' + id, function(data) {
-                        $('#info').html('<form id="updateForm" class="col-md-8" method="post">' +
-                            '<div class="form-group">' + '<lable>name</lable>' +
-                            '<input class="form-control" type="text" name="name" value="' + data.name +
-                            '"></input>' + '<div>' + '<button type=submit class="form-control btn btn-primary">update</button>' +
-                            '</form><br><button id="delete" class="form-control btn btn-secondary">delete</button>'
-                        );
-                        $('#updateForm').submit(function(e) {
-                            e.preventDefault();
-                            var updatedName = {
-                                name: $('input[name=name]').val()
-                            };
-                            $.post('/api/update/' + data.id, updatedName, function(resp) {
-                                $('#info').addClass('hidden');
-                                $('.queue-library').removeClass('hidden');
-                            });
-                        });
-                        $('#delete').click(function(){
-                            $.post('/api/delete/' + data.id, function(resp) {
-                                $('#info').addClass('hidden');
-                                $('.queue-library').removeClass('hidden');
-                                toastr.info('Song deleted!', 'Success');
-                            });
+            edit = function(id) {
+                $('.queue-library').addClass('hidden');
+                $('#info').removeClass('hiddden');
+                $.get('/api/edit/' + id, function(data) {
+                    $('#info').html('<form id="updateForm" class="col-md-8" method="post">' +
+                        '<div class="form-group">' +
+                        '<lable>name</lable>' +
+                        '<input class="form-control" type="text" name="name" value="' + data.name + '"></input>' + '<div>' + '<button type=submit class="form-control btn btn-primary">update</button>' + '</form><br><button id="delete" class="form-control btn btn-secondary">delete</button>');
+                    $('#updateForm').submit(function(e) {
+                        e.preventDefault();
+                        var updatedName = {
+                            name: $('input[name=name]').val()
+                        };
+                        $.post('/api/update/' + data.id, updatedName, function(resp) {
+                            $('#info').addClass('hidden');
+                            $('.queue-library').removeClass('hidden');
                         });
                     });
-                }
-            });
-        }
-
-        $('#submit').attr('disabled', true);
-
-        $('#file').change(function() {
-            $('#submit').removeAttr('disabled');
-        });
-
-        $('#library-section, #queue-section').addClass('hidden');
-
-        $('#library').click(function(e) {
-            e.preventDefault();
-            $('#playback-section, #queue-section').addClass('hidden');
-            $('#library-section').removeClass('hidden');
-
-            $('#addForm').submit(function(e) {
-                e.preventDefault();
-                toastr.info('Song added!', 'Success');
-
-                var form = new FormData($("#addForm")[0]);
-
-                $.ajax({
-                    url: '/api/music',
-                    method: "POST",
-                    dataType: 'json',
-                    data: form,
-                    processData: false,
-                    contentType: false,
-                    success: function(result){
-                    },
-                    error: function(er){}
+                    $('#delete').click(function() {
+                        $.post('/api/delete/' + data.id, function(resp) {
+                            $('#info').addClass('hidden');
+                            $('.queue-library').removeClass('hidden');
+                            toastr.info('Song deleted!', 'Success');
+                        });
+                    });
                 });
+            }
+        });
+    }
+
+    $('#submit').attr('disabled', true);
+
+    $('#file').change(function() {
+        $('#submit').removeAttr('disabled');
+    });
+
+    $('#playback').addClass('active');
+
+    $('#library-section, #queue-section').addClass('hidden');
+
+    $('#library').click(function(e) {
+        e.preventDefault();
+        $(this).addClass('active');
+        $('#playback, #queue').removeClass('active');
+        $('#playback-section, #queue-section').addClass('hidden');
+        $('#library-section').removeClass('hidden');
+
+        $('#addForm').submit(function(e) {
+            e.preventDefault();
+            toastr.info('Song added!', 'Success');
+
+            var form = new FormData($("#addForm")[0]);
+
+            $.ajax({
+                url: '/api/music',
+                method: "POST",
+                dataType: 'json',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function(result) {},
+                error: function(er) {}
             });
         });
+    });
 
-        $('#playback').click(function(e) {
-            e.preventDefault();
-            $('#library-section, #queue-section').addClass('hidden');
-            $('#playback-section').removeClass('hidden');
-        });
+    $('#playback').click(function(e) {
+        e.preventDefault();
+        $(this).addClass('active');
+        $('#library, #queue').removeClass('active');
+        $('#library-section, #queue-section').addClass('hidden');
+        $('#playback-section').removeClass('hidden');
+    });
 
-        $('#queue').click(function(e) {
-            e.preventDefault();
-            $('#playback-section, #library-section').addClass('hidden');
-            $('#queue-section').removeClass('hidden');
-        });
+    $('#queue').click(function(e) {
+        e.preventDefault();
+        $(this).addClass('active');
+        $('#playback, #library').removeClass('active');
+        $('#playback-section, #library-section').addClass('hidden');
+        $('#queue-section').removeClass('hidden');
+    });
 });
