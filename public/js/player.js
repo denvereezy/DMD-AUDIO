@@ -83,6 +83,7 @@ jQuery(function($) {
                     } else {
                         index = 0;
                         loadTrack(index);
+                        audio.play();
                     }
                 }),
                 btnPlay = $('#play').click(function() {
