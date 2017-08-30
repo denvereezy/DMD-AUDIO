@@ -1,4 +1,12 @@
-.library, .queue-library{
+.library{
+	overflow: scroll;
+	height: 500px;
+	width: auto;
+	color: #0095D8;
+	font-size: 1.3em;
+	word-wrap:break-word;
+}
+.queue-library{
 	overflow: scroll;
 	height: 500px;
 	width: auto;
@@ -12,6 +20,10 @@
 }
 
 .library::-webkit-scrollbar {
+        width: 0 !important;
+}
+
+.queue-library::-webkit-scrollbar {
         width: 0 !important;
 }
 
@@ -391,7 +403,7 @@ a {
 
 a:hover,
 a:focus {
-	color: #00608c;
+	color: white;
 	text-decoration: underline
 }
 
