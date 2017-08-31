@@ -190,7 +190,14 @@ jQuery(function($) {
                     $('#info').html('<form id="updateForm" class="col-md-8" method="post">' +
                         '<div class="form-group">' +
                         '<lable>name</lable>' +
-                        '<input class="form-control" type="text" name="name" value="' + data.name + '"></input>' + '<div>' + '<button type=submit class="form-control btn btn-primary">update</button>' + '</form><br><button id="delete" class="form-control btn btn-secondary">delete</button>');
+                        '<input class="form-control" type="text" name="name" value="' + data.name +
+                        '"></input>' +
+                        '<div>' +
+                        '<button type=submit class="form-control btn btn-primary">update</button>' +
+                        '</form><br><button id="delete" class="form-control btn btn-secondary">delete</button>' +
+                        '<br><button id="cancel" class="form-control btn btn-default">cancel</button>'
+                    );
+
                     $('#updateForm').submit(function(e) {
                         e.preventDefault();
                         var updatedName = {
@@ -201,12 +208,20 @@ jQuery(function($) {
                             $('.queue-library').removeClass('hidden');
                         });
                     });
-                    $('#delete').click(function() {
+
+                    $('#delete').click(function(e) {
                         $.post('/api/delete/' + data.id, function(resp) {
                             $('#info').addClass('hidden');
                             $('.queue-library').removeClass('hidden');
                             toastr.info('Song deleted!', 'Success');
+                            e.preventDefault();
                         });
+                    });
+
+                    $('#cancel').click(function(e) {
+                        $('#info').addClass('hidden');
+                        $('.queue-library').removeClass('hidden');
+                        e.preventDefault();
                     });
                 });
             }
