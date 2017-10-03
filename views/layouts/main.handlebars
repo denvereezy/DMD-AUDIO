@@ -27,14 +27,17 @@
         <br><br>
         <div class="centre">
             <h3>Add Music</h3>
-            <form id="addForm" class="form" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <input id="file" type="file" class="form-control" name="audio" accept="audio/*" required>
+            <form id="addForm" class="form" method="post" action="/api/music" enctype="multipart/form-data">
+                <div class="form-group" id="drop">
+                    Drop Here
+                    <br>
+                    <a>Browse</a>
+                    <input id="file" type="file" class="form-control" name="audio" accept="audio/*" multiple required>
                 </div>
-                <button type="submit" id="submit" class="btn btn-default form-control">Add</button>
+                <ul id="ul">
+    			</ul>
             </form>
             <br>
-            <div class="library"></div>
         </div>
     </section>
     <section id="playback-section">
@@ -102,7 +105,7 @@
         <ul>
             <li id="library"><a href="#"><i class="fa fa-music"></i> Library</a></li>
             <li id="playback"><a href="#"><i class="fa fa-play"></i> Playback</a></li>
-            <li id="queue"><a href="#">><i class="fa fa-list"></i> Queue</a></li>
+            <li id="queue"><a href="#"><i class="fa fa-list"></i> Queue</a></li>
         </ul>
     </div>
     <script src="build/build.js"></script>
