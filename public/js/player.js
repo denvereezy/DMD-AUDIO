@@ -3,11 +3,8 @@ b.setAttribute('data-useragent', navigator.userAgent);
 b.setAttribute('data-platform', navigator.platform);
 var toastr = require('./toastr.min.js');
 
-jQuery(function($) {
-
-    var supportsAudio = !!document.createElement('audio').canPlayType;
-
-    if (supportsAudio) {
+$(function() {
+    getMusic = function(){
         $.get("/api/music", function(data) {
             var time;
             $(".duration_dial").knob({
@@ -176,107 +173,87 @@ jQuery(function($) {
                     $('.duration_dial').val(currentTime).trigger('change');
                     time = min + ":" + sec;
                 }, false);
-            extension = audio.canPlayType('audio/mpeg')
+                extension = audio.canPlayType('audio/mpeg')
                 ? '.mp3'
                 : audio.canPlayType('audio/ogg')
-                    ? '.ogg'
-                    : '';
-            loadTrack(index);
+                ? '.ogg'
+                : '';
+                loadTrack(index);
+            });
+        };
+        getMusic();
 
-            edit = function(id) {
-                $('.queue-library').addClass('hidden');
-                $('#info').removeClass('hiddden');
-                $.get('/api/edit/' + id, function(data) {
-                    $('#info').html('<form id="updateForm" class="col-md-8" method="post">' +
-                        '<div class="form-group">' +
-                        '<lable>name</lable>' +
-                        '<input class="form-control" type="text" name="name" value="' + data.name +
-                        '"></input>' +
-                        '<div>' +
-                        '<button type=submit class="form-control btn btn-primary">update</button>' +
-                        '</form><br><button id="delete" class="form-control btn btn-secondary">delete</button>' +
-                        '<br><button id="cancel" class="form-control btn btn-default">cancel</button>'
-                    );
+        edit = function(id) {
+            $('.queue-library').addClass('hidden');
+            $('#info').removeClass('hiddden');
+            $.get('/api/edit/' + id, function(data) {
+                $('#info').html(
+                    '<form id="updateForm" class="col-md-8" method="post">' +
+                    '<div class="form-group">' +
+                    '<lable>name</lable>' +
+                    '<input class="form-control" type="text" name="name" value="' + data.name +
+                    '"></input>' +
+                    '<div>' +
+                    '<button type=submit class="form-control btn btn-primary">update</button>' +
+                    '</form><br><button id="delete" class="form-control btn btn-secondary">delete</button>' +
+                    '<br><button id="cancel" class="form-control btn btn-default">cancel</button>'
+                );
 
-                    $('#updateForm').submit(function(e) {
-                        e.preventDefault();
-                        var updatedName = {
-                            name: $('input[name=name]').val()
-                        };
-                        $.post('/api/update/' + data.id, updatedName, function(resp) {
-                            $('#info').addClass('hidden');
-                            $('.queue-library').removeClass('hidden');
-                        });
-                    });
+                $('#updateForm').submit(function(e) {
+                    e.preventDefault();
+                    var updatedName = {
+                        name: $('input[name=name]').val()
+                    };
 
-                    $('#delete').click(function(e) {
-                        $.post('/api/delete/' + data.id, function(resp) {
-                            $('#info').addClass('hidden');
-                            $('.queue-library').removeClass('hidden');
-                            toastr.info('Song deleted!', 'Success');
-                            e.preventDefault();
-                        });
-                    });
-
-                    $('#cancel').click(function(e) {
+                    $.post('/api/update/' + data.id, updatedName, function(resp) {
                         $('#info').addClass('hidden');
                         $('.queue-library').removeClass('hidden');
+                        getMusic();
+                    });
+                });
+
+                $('#delete').click(function(e) {
+                    $.post('/api/delete/' + data.id, function(resp) {
+                        $('#info').addClass('hidden');
+                        $('.queue-library').removeClass('hidden');
+                        toastr.info('Song deleted!', 'Success');
+                        getMusic();
                         e.preventDefault();
                     });
                 });
-            }
-        });
-    }
 
-    $('#submit').attr('disabled', true);
-
-    $('#file').change(function() {
-        $('#submit').removeAttr('disabled');
-    });
-
-    $('#playback').addClass('active');
-
-    $('#library-section, #queue-section').addClass('hidden');
-
-    $('#library').click(function(e) {
-        e.preventDefault();
-        $(this).addClass('active');
-        $('#playback, #queue').removeClass('active');
-        $('#playback-section, #queue-section').addClass('hidden');
-        $('#library-section').removeClass('hidden');
-
-        $('#addForm').submit(function(e) {
-            e.preventDefault();
-            toastr.info('Song added!', 'Success');
-
-            var form = new FormData($("#addForm")[0]);
-
-            $.ajax({
-                url: '/api/music',
-                method: "POST",
-                dataType: 'json',
-                data: form,
-                processData: false,
-                contentType: false,
-                success: function(result) {},
-                error: function(er) {}
+                $('#cancel').click(function(e) {
+                    $('#info').addClass('hidden');
+                    $('.queue-library').removeClass('hidden');
+                    e.preventDefault();
+                });
             });
-        });
-    });
+        };
 
-    $('#playback').click(function(e) {
-        e.preventDefault();
-        $(this).addClass('active');
-        $('#library, #queue').removeClass('active');
+        $('#playback').addClass('active');
         $('#library-section, #queue-section').addClass('hidden');
-        $('#playback-section').removeClass('hidden');
-    });
 
-    $('#queue').click(function(e) {
-        e.preventDefault();
-        $(this).addClass('active');
-        $('#playback, #library').removeClass('active');
-        $('#playback-section, #library-section').addClass('hidden');
-        $('#queue-section').removeClass('hidden');
-    });
+        $('#library').click(function(e) {
+            e.preventDefault();
+            $(this).addClass('active');
+            $('#playback, #queue').removeClass('active');
+            $('#playback-section, #queue-section').addClass('hidden');
+            $('#library-section').removeClass('hidden');
+        });
+
+        $('#playback').click(function(e) {
+            e.preventDefault();
+            $(this).addClass('active');
+            $('#library, #queue').removeClass('active');
+            $('#library-section, #queue-section').addClass('hidden');
+            $('#playback-section').removeClass('hidden');
+        });
+
+        $('#queue').click(function(e) {
+            e.preventDefault();
+            $(this).addClass('active');
+            $('#playback, #library').removeClass('active');
+            $('#playback-section, #library-section').addClass('hidden');
+            $('#queue-section').removeClass('hidden');
+        });
 });
