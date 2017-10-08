@@ -1,18 +1,14 @@
 const co = require('co');
 const child_process = require('child_process');
+const link = require('./musicList');
 
 exports.add = function(req, res, next) {
     co(function * () {
         try {
             const services = yield req.getServices();
             const musicDataService = services.musicDataService;
-            const path = (req.file.path).replace('public/', '');
-
-            const data = {
-                song: path,
-                name: req.file.originalname.replace('.mp3', '')
-            };
-            const music = yield musicDataService.add(data);
+            var data = req.files;
+            yield link.linkMultipleSongs(req,data);
             res.sendStatus(200);
         } catch (err) {
             next(err);
@@ -77,8 +73,7 @@ exports.delete = function(req, res, next) {
             var command = 'rm public/' + itemToDelete.song;
             child_process.exec(command, (error, stdout, stderr) => {
                 if (error) {
-                    // console.log(`exec error: ${error}`);
-                    // res.status(500).send(`exec error: ${error}`);
+                    console.log(error);
                     return;
                 }
             });
