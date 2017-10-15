@@ -10,9 +10,11 @@ module.exports = {
         __dirname + '/public/js/jquery.iframe-transport.js',
         __dirname + '/public/js/jquery.fileupload.js',
         __dirname + '/public/js/toastr.min.js',
+        __dirname + '/public/js/socket.io.js',
         __dirname + '/public/js/eq.js',
         __dirname + '/public/js/player.js',
         __dirname + '/public/js/upload.js',
+        __dirname + '/public/js/remote.js'
     ],
 
     output: {
