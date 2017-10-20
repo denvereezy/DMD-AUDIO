@@ -4,8 +4,8 @@ b.setAttribute('data-platform', navigator.platform);
 var toastr = require('./toastr.min.js');
 
 $(function() {
-    getMusic = function(){
-        $.get("/api/music", function(data) {
+    getMusic = function(url){
+        return $.get(url, function(data) {
             var time;
             $(".duration_dial").knob({
                 'change': function(value) {
@@ -181,7 +181,7 @@ $(function() {
                 loadTrack(index);
             });
         };
-        getMusic();
+        getMusic("/api/music");
 
         edit = function(id) {
             $('.queue-library').addClass('hidden');
@@ -190,16 +190,20 @@ $(function() {
                 $('#info').html(
                     '<form id="updateForm" class="col-md-8" method="post">' +
                     '<div class="form-group">' +
-                    '<lable>name</lable>' +
+                    '<lable>NAME</lable>' +
                     '<input class="form-control" type="text" name="name" value="' + data.name +
                     '"></input>' +
-                    '<div>' +
-                    '<button type=submit class="form-control btn btn-primary">update</button>' +
-                    '</form><br><button id="delete" class="form-control btn btn-secondary">delete</button>' +
-                    '<br><button id="cancel" class="form-control btn btn-default">cancel</button>'
+                    '</div>' +
+                    '<div class="form-group">' +
+                    '<button type=submit class="form-control btn btn-primary">UPDATE</button> <br><br>' +
+                    '<button id="delete" class="form-control btn btn-secondary">DELETE</button> <br><br>' +
+                    '<button id="cancel" class="form-control btn btn-default">CANCEL</button> <br><br>' +
+                    '</div>' +
+                    '</form>'
                 );
 
                 $('#updateForm').submit(function(e) {
+
                     e.preventDefault();
                     var updatedName = {
                         name: $('input[name=name]').val()
@@ -208,7 +212,8 @@ $(function() {
                     $.post('/api/update/' + data.id, updatedName, function(resp) {
                         $('#info').addClass('hidden');
                         $('.queue-library').removeClass('hidden');
-                        getMusic();
+                        getMusic("/api/music");
+
                     });
                 });
 
