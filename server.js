@@ -5,11 +5,14 @@ const express          = require('express'),
 	  compression 	   = require('compression'),
 	  multer 		   = require('multer'),
 	  exhbs            = require('express-handlebars'),
+	  server      	   = require('http').createServer(app),
+	  io			   = require('socket.io')(server),
 	  router		   = express.Router(),
 	  connection       = require('./routes/index'),
 	  music            = require('./routes/music'),
 	  MusicDataService = require('./data-services/musicDataService'),
-      routing 		   = require('./routes/routing');
+      routing 		   = require('./routes/routing'),
+	  remote		   = require('./utils/remoteServer');
 
 
 const dbOptions = {
@@ -44,7 +47,12 @@ router.post('/delete/:id', music.delete);
 
 app.use('/api', router);
 
+io.sockets.on('connection', socket => {
+	console.log('socket connection established');
+	remote.control(socket);
+});
+
 const port = process.env.PORT || 8080;
-app.listen(port, () => {
+server.listen(port, () => {
     console.log('App running on port', port);
 });
