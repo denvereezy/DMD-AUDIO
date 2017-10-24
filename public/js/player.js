@@ -212,8 +212,6 @@ $(function() {
                     $.post('/api/update/' + data.id, updatedName, function(resp) {
                         $('#info').addClass('hidden');
                         $('.queue-library').removeClass('hidden');
-                        getMusic("/api/music");
-
                     });
                 });
 
@@ -222,7 +220,6 @@ $(function() {
                         $('#info').addClass('hidden');
                         $('.queue-library').removeClass('hidden');
                         toastr.info('Song deleted!', 'Success');
-                        getMusic();
                         e.preventDefault();
                     });
                 });
