@@ -212,6 +212,7 @@ $(function() {
                     $.post('/api/update/' + data.id, updatedName, function(resp) {
                         $('#info').addClass('hidden');
                         $('.queue-library').removeClass('hidden');
+                        toastr.info('Song updated!', 'Success');
                     });
                 });
 
