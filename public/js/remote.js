@@ -2,7 +2,6 @@ var io = require('./socket.io');
 var socket = io();
 
 socket.on('action', function(data) {
-    console.log(data.action);
     switch (data.action) {
         case 'play_pause':
             $('#play').click();
@@ -18,6 +17,7 @@ socket.on('action', function(data) {
             break;
     };
 });
+
 socket.on('volume', function(data) {
     switch (data.volume) {
         case 'up':
