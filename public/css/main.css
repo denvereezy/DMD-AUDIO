@@ -275,6 +275,14 @@ body {
 	font-size: 25px;
 }
 
+#edit{
+	text-align: center;
+	color: #0095D8;
+}
+#edit lable{
+    font-size: 25px;
+}
+
 article,
 aside,
 details,
