@@ -188,6 +188,7 @@ $(function() {
             $('#info').removeClass('hiddden');
             $.get('/api/edit/' + id, function(data) {
                 $('#info').html(
+                    '<div id="edit">' +
                     '<form id="updateForm" class="col-md-8" method="post">' +
                     '<div class="form-group">' +
                     '<lable>NAME</lable>' +
@@ -199,7 +200,8 @@ $(function() {
                     '<button id="delete" class="form-control btn btn-secondary">DELETE</button> <br><br>' +
                     '<button id="cancel" class="form-control btn btn-default">CANCEL</button> <br><br>' +
                     '</div>' +
-                    '</form>'
+                    '</form>' +
+                    '</div>'
                 );
 
                 $('#updateForm').submit(function(e) {
