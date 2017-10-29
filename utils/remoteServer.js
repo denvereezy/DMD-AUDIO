@@ -1,6 +1,6 @@
 const five  = require('johnny-five'),
-    //   Raspi = require('raspi-io'),
-      board = new five.Board(/*{ io: new Raspi() }*/);
+      Raspi = require('raspi-io'),
+      board = new five.Board({ io: new Raspi() });
 
 exports.control = function(socket) {
     board.on('ready', () => {
