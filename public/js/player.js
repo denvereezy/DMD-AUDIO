@@ -189,18 +189,18 @@ $(function() {
             $.get('/api/edit/' + id, function(data) {
                 $('#info').html(
                     '<div id="edit">' +
-                    '<form id="updateForm" class="col-md-8" method="post">' +
-                    '<div class="form-group">' +
-                    '<lable>NAME</lable>' +
-                    '<input class="form-control" type="text" name="name" value="' + data.name +
-                    '"></input>' +
-                    '</div>' +
-                    '<div class="form-group">' +
-                    '<button type=submit class="form-control btn btn-primary">UPDATE</button> <br><br>' +
-                    '<button id="delete" class="form-control btn btn-secondary">DELETE</button> <br><br>' +
-                    '<button id="cancel" class="form-control btn btn-default">CANCEL</button> <br><br>' +
-                    '</div>' +
-                    '</form>' +
+                        '<form id="updateForm" class="col-md-8" method="post">' +
+                            '<div class="form-group">' +
+                                '<lable>NAME</lable>' +
+                                '<input class="form-control" type="text" name="name" value="' + data.name +
+                                '"></input>' +
+                            '</div>' +
+                            '<div class="form-group">' +
+                                '<button type=submit class="form-control btn btn-primary">UPDATE</button> <br><br>' +
+                                '<button id="delete" class="form-control btn btn-secondary">DELETE</button> <br><br>' +
+                                '<button id="cancel" class="form-control btn btn-default">CANCEL</button> <br><br>' +
+                            '</div>' +
+                        '</form>' +
                     '</div>'
                 );
 
