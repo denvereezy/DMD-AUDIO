@@ -26,5 +26,8 @@ socket.on('volume', function(data) {
         case 'down':
             $('#volume_down').click();
             break;
+        case 'mute':
+            $('#volume_off').click();
+            break;
     };
 });
