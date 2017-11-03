@@ -10,47 +10,54 @@ exports.control = function(socket) {
             play_pause  : new five.Button('P1-7'),
             next        : new five.Button('P1-8'),
             back        : new five.Button('P1-10'),
-            stop        : new five.Button('P1-11')
+            stop        : new five.Button('P1-11'),
         };
 
         const volume = {
             up      : new five.Button('P1-13'),
-            down    : new five.Button('P1-15')
+            down    : new five.Button('P1-15'),
+            mute    : new five.Button('P1-16')
         };
 
-        action.play_pause.on("down", function() {
+        action.play_pause.on('down', () => {
             socket.emit('action', {
                 action: 'play_pause'
             })
         });
 
-        action.next.on("down", function() {
+        action.next.on('down', () => {
             socket.emit('action', {
                 action: 'next'
             })
         });
 
-        action.back.on("down", function() {
+        action.back.on('down', () => {
             socket.emit('action', {
                 action: 'back'
             })
         });
 
-        action.stop.on("down", function() {
+        action.stop.on('down', () => {
             socket.emit('action', {
                 action: 'stop'
             })
         });
 
-        volume.up.on("down", function() {
+        volume.up.on('down', () => {
             socket.emit('volume', {
                 volume: 'up'
             })
         });
 
-        volume.down.on("down", function() {
+        volume.down.on('down', () => {
             socket.emit('volume', {
                 volume: 'down'
+            })
+        });
+
+        volume.mute.on('down', () => {
+            socket.emit('volume', {
+                volume: 'mute'
             })
         });
     });
