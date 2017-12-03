@@ -10,7 +10,8 @@ exports.control = function(socket) {
             play_pause  : new five.Button('P1-7'),
             next        : new five.Button('P1-8'),
             back        : new five.Button('P1-10'),
-            stop        : new five.Button('P1-11')
+            stop        : new five.Button('P1-11'),
+            random      : new five.Button('P1-29')
         };
 
         const volume = {
@@ -40,6 +41,12 @@ exports.control = function(socket) {
         action.stop.on('down', () => {
             socket.emit('action', {
                 action: 'stop'
+            })
+        });
+
+        action.random.on('dowm', () => {
+            socket.emit('action', {
+                action: 'random'
             })
         });
 
