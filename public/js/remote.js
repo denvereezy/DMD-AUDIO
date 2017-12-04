@@ -15,6 +15,9 @@ socket.on('action', function(data) {
         case 'next':
             $('#next').click();
             break;
+        case 'random':
+            $('#random').click();
+            break;
     };
 });
 
