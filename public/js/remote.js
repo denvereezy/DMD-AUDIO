@@ -18,6 +18,8 @@ socket.on('action', function(data) {
         case 'random':
             $('#random').click();
             break;
+        case 'repeat':
+            $('#repeat').click();
     };
 });
 
