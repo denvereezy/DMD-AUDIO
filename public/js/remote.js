@@ -20,6 +20,7 @@ socket.on('action', function(data) {
             break;
         case 'repeat':
             $('#repeat').click();
+            break;
     };
 });
 
