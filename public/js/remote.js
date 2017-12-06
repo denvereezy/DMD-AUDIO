@@ -21,6 +21,9 @@ socket.on('action', function(data) {
         case 'repeat':
             $('#repeat').click();
             break;
+        case 'single':
+            $('#single').click();
+            break;
     };
 });
 
