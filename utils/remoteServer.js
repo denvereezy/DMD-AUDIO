@@ -50,6 +50,12 @@ exports.control = function(socket) {
             })
         });
 
+        action.repeat.on('down', () => {
+            socket.emit('action', {
+                action: 'repeat'
+            })
+        });
+
         volume.up.on('down', () => {
             socket.emit('volume', {
                 volume: 'up'
