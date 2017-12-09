@@ -12,7 +12,8 @@ exports.control = function(socket) {
             back        : new five.Button('P1-10'),
             stop        : new five.Button('P1-11'),
             random      : new five.Button('P1-29'),
-            repeat      : new five.Button('P1-37')
+            repeat      : new five.Button('P1-37'),
+            single      : new five.Button('P1-36')
         };
 
         const volume = {
