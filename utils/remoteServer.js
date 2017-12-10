@@ -58,6 +58,12 @@ exports.control = function(socket) {
             })
         });
 
+        action.single.on('down', () => {
+            socket.emit('action', {
+                action: 'single'
+            })
+        });
+
         volume.up.on('down', () => {
             socket.emit('volume', {
                 volume: 'up'
