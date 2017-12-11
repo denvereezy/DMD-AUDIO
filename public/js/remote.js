@@ -40,3 +40,11 @@ socket.on('volume', function(data) {
             break;
     };
 });
+
+socket.on('view', function(data) {
+    switch (data.view) {
+        case 'library':
+            $('#library a').click();
+            break;
+    }
+})
