@@ -46,5 +46,8 @@ socket.on('view', function(data) {
         case 'library':
             $('#library a').click();
             break;
+        case 'playback':
+            $('#playback a').click();
+            break;
     }
 })
