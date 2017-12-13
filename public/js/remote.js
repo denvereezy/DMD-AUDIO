@@ -49,5 +49,7 @@ socket.on('view', function(data) {
         case 'playback':
             $('#playback a').click();
             break;
+        case 'queue':
+            $('#queue a').click();
     }
 })
