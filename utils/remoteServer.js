@@ -22,6 +22,10 @@ exports.control = function(socket) {
             mute    : new five.Button('P1-16')
         };
 
+        const controls = {
+            library  : new five.Button('P1-22')
+        };
+
         action.play_pause.on('down', () => {
             socket.emit('action', {
                 action: 'play_pause'
@@ -79,6 +83,12 @@ exports.control = function(socket) {
         volume.mute.on('down', () => {
             socket.emit('volume', {
                 volume: 'mute'
+            })
+        });
+
+        controls.library.on('down', () => {
+            socket.emit('control', {
+                control: 'library'
             })
         });
     });
