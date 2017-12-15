@@ -87,8 +87,8 @@ exports.control = function(socket) {
         });
 
         controls.library.on('down', () => {
-            socket.emit('control', {
-                control: 'library'
+            socket.emit('view', {
+                view: 'library'
             })
         });
     });
