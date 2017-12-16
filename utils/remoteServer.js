@@ -11,19 +11,20 @@ exports.control = function(socket) {
             next        : new five.Button('P1-8'),
             back        : new five.Button('P1-10'),
             stop        : new five.Button('P1-11'),
-            random      : new five.Button('P1-29'),
-            repeat      : new five.Button('P1-37'),
-            single      : new five.Button('P1-36')
+            random      : new five.Button('P1-12'),
+            repeat      : new five.Button('P1-13'),
+            single      : new five.Button('P1-15')
         };
 
         const volume = {
-            up      : new five.Button('P1-13'),
-            down    : new five.Button('P1-15'),
-            mute    : new five.Button('P1-16')
+            up      : new five.Button('P1-16'),
+            down    : new five.Button('P1-18'),
+            mute    : new five.Button('P1-19')
         };
 
         const controls = {
-            library  : new five.Button('P1-22')
+            library  : new five.Button('P1-21'),
+            playback : new five.Button('P1-22')
         };
 
         action.play_pause.on('down', () => {
