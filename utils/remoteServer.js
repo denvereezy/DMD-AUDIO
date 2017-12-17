@@ -92,5 +92,11 @@ exports.control = function(socket) {
                 view: 'library'
             })
         });
+
+        controls.playback.on('down', () => {
+            socket,emit('view', {
+                view: 'playback'
+            })
+        });
     });
 };
