@@ -94,7 +94,7 @@ exports.control = function(socket) {
         });
 
         controls.playback.on('down', () => {
-            socket,emit('view', {
+            socket.emit('view', {
                 view: 'playback'
             })
         });
