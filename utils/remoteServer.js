@@ -24,7 +24,8 @@ exports.control = function(socket) {
 
         const controls = {
             library  : new five.Button('P1-21'),
-            playback : new five.Button('P1-22')
+            playback : new five.Button('P1-22'),
+            queue    : new five.Button('P1-23')
         };
 
         action.play_pause.on('down', () => {
@@ -96,6 +97,12 @@ exports.control = function(socket) {
         controls.playback.on('down', () => {
             socket.emit('view', {
                 view: 'playback'
+            })
+        });
+
+        controls.queue.on('down', () => {
+            socket.emit('view', {
+                view: 'queue'
             })
         });
     });
