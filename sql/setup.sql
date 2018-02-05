@@ -8,8 +8,7 @@ USE music;
 DROP TABLE IF EXISTS `music`;
 
 CREATE TABLE `music` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `song` varchar(100) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL
-  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
